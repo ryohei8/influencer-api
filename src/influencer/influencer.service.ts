@@ -22,4 +22,20 @@ export class InfluencerService {
       data,
     });
   }
+
+  async updateInfluencer(
+    id: number,
+    updateData: Prisma.InfluencerUpdateInput,
+  ): Promise<Influencer> {
+    return this.prisma.influencer.update({
+      where: { id },
+      data: updateData,
+    });
+  }
+
+  async deleteInfluencer(id: number): Promise<void> {
+    await this.prisma.influencer.delete({
+      where: { id },
+    });
+  }
 }
