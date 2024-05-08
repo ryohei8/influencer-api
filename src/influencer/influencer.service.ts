@@ -6,8 +6,21 @@ import { Influencer, Prisma } from '@prisma/client';
 export class InfluencerService {
   constructor(private prisma: PrismaService) {}
 
-  async findAll(): Promise<Influencer[]> {
-    return this.prisma.influencer.findMany();
+  async findAll(
+    name?: string,
+    page: number = 1,
+    pageSize: number = 10,
+  ): Promise<Influencer[]> {
+    const skip = (page - 1) * pageSize;
+    const where: Prisma.InfluencerWhereInput = name
+      ? { name: { contains: name } }
+      : {};
+
+    return this.prisma.influencer.findMany({
+      where,
+      skip,
+      take: pageSize,
+    });
   }
 
   async findInfluencerById(id: number): Promise<Influencer | null> {

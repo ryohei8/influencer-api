@@ -7,6 +7,7 @@ import {
   Patch,
   ParseIntPipe,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { InfluencerService } from './influencer.service';
 import { Influencer, Prisma } from '@prisma/client';
@@ -15,8 +16,12 @@ import { Influencer, Prisma } from '@prisma/client';
 export class InfluencerController {
   constructor(private readonly influencerService: InfluencerService) {}
   @Get()
-  findMany(): Promise<Influencer[]> {
-    return this.influencerService.findAll();
+  findAll(
+    @Query('name') name: string,
+    @Query('page') page: number,
+    @Query('pageSize') pageSize: number,
+  ) {
+    return this.influencerService.findAll(name, page, pageSize);
   }
 
   @Get(':id')
