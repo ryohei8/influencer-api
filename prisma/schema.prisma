@@ -23,6 +23,7 @@ model Influencer {
   createdAt         DateTime          @default(now())
   updatedAt         DateTime          @updatedAt
   InfluencerList    InfluencerList[]
+  deletedAt         DateTime?
 }
 
 model InfluencerList {
@@ -31,4 +32,5 @@ model InfluencerList {
   description   String
   criteria      Json
   influencers   Influencer[]          @relation
+  deletedAt         DateTime?
 }

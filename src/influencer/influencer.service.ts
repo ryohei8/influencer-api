@@ -12,9 +12,10 @@ export class InfluencerService {
     pageSize: number = 10,
   ): Promise<Influencer[]> {
     const skip = (page - 1) * pageSize;
-    const where: Prisma.InfluencerWhereInput = name
-      ? { name: { contains: name } }
-      : {};
+    const where: Prisma.InfluencerWhereInput = {
+      deletedAt: null,
+      ...(name ? { name: { contains: name } } : {}),
+    };
 
     return this.prisma.influencer.findMany({
       where,
@@ -46,9 +47,10 @@ export class InfluencerService {
     });
   }
 
-  async deleteInfluencer(id: number): Promise<void> {
-    await this.prisma.influencer.delete({
+  async deleteInfluencer(id: number): Promise<Influencer> {
+    return this.prisma.influencer.update({
       where: { id },
+      data: { deletedAt: new Date() },
     });
   }
 }

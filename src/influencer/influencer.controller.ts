@@ -45,7 +45,7 @@ export class InfluencerController {
   }
 
   @Delete(':id')
-  async deleteInfluencer(@Param('id', ParseIntPipe) id: number): Promise<void> {
-    await this.influencerService.deleteInfluencer(id);
+  deleteInfluencer(@Param('id', ParseIntPipe) id: number) {
+    return this.influencerService.deleteInfluencer(id);
   }
 }
