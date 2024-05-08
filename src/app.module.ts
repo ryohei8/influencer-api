@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
 import { InfluencerModule } from './influencer/influencer.module';
+import { ListModule } from './list/list.module';
 
 @Module({
-  imports: [InfluencerModule],
+  imports: [InfluencerModule, ListModule],
   controllers: [],
   providers: [],
 })

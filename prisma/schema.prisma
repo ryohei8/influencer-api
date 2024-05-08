@@ -15,11 +15,20 @@ datasource db {
 
 
 model Influencer {
-  id            Int     @default(autoincrement()) @id
+  id                Int               @default(autoincrement()) @id
+  name              String
+  address           String
+  age               Int
+  gender            String
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+  InfluencerList    InfluencerList[]
+}
+
+model InfluencerList {
+  id            Int                   @default (autoincrement()) @id 
   name          String
-  address       String
-  age           Int
-  gender        String
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  description   String
+  criteria      Json
+  influencers   Influencer[]          @relation
 }
