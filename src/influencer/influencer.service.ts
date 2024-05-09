@@ -1,11 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { Influencer, Prisma } from '@prisma/client';
 
 @Injectable()
 export class InfluencerService {
   constructor(private prisma: PrismaService) {}
-
   async findAll(
     name?: string,
     page: number = 1,
@@ -25,9 +24,14 @@ export class InfluencerService {
   }
 
   async findInfluencerById(id: number): Promise<Influencer | null> {
-    return this.prisma.influencer.findUnique({
+    const influencer = await this.prisma.influencer.findUnique({
       where: { id },
     });
+
+    if (!influencer) {
+      throw new NotFoundException(`Influencer with ID ${id} not found`);
+    }
+    return influencer;
   }
 
   async createInfluencer(
