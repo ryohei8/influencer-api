@@ -24,6 +24,8 @@ model Influencer {
   updatedAt         DateTime          @updatedAt
   InfluencerList    InfluencerList[]  @relation("InfluencerToList")
   deletedAt         DateTime?
+
+  @@index([name])
 }
 
 model InfluencerList {

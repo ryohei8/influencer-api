@@ -29,6 +29,7 @@ export class InfluencerService {
       where: { id },
     });
   }
+
   async createInfluencer(
     data: Prisma.InfluencerCreateInput,
   ): Promise<Influencer> {
